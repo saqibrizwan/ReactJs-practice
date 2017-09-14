@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 
 const TodoForm = (props) => {
     return (
@@ -10,6 +11,10 @@ const TodoForm = (props) => {
             <button type="submit">Submit</button>
         </form>
     )
+};
+TodoForm.PropTypes = {
+    currentTask: PropTypes.func.isRequired,
+    updateTask: PropTypes.number.isRequired,
+    addTask :  PropTypes.func.isRequired
 }
-
-export default TodoForm
+export default TodoForm;

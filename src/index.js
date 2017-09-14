@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import TodoItem from './components/TodoItem.js'
 import TodoForm from './components/TodoForm.js'
+
 import './index.css'
 
 class TodoList extends React.Component {
@@ -10,6 +11,8 @@ class TodoList extends React.Component {
         this.changeStatus = this.changeStatus.bind(this);
         this.updateTask = this.updateTask.bind(this);
         this.addTask = this.addTask.bind(this);
+        this.deleteTask = this.deleteTask.bind(this);
+        this.editTask = this.editTask.bind(this);
         this.state = {
             tasks: [
                 {
@@ -51,9 +54,25 @@ class TodoList extends React.Component {
         tasks.push({
             name: currentTask,
             completed: false
-        })
+        });
         this.setState({
-            tasks:tasks
+            tasks:tasks,
+            currentTask: ''
+        })
+    }
+    deleteTask(index){
+        let tasks = this.state.tasks;
+        tasks.splice(index, 1);
+        this.setState({
+            tasks
+        })
+    }
+    editTask(index, value){
+        var tasks = this.state.tasks;
+        var task = tasks[index];
+        task['name'] = value;
+        this.setState({
+            tasks
         })
     }
     render(){
@@ -67,7 +86,13 @@ class TodoList extends React.Component {
                 <ul>
                     {
                         this.state.tasks.map((task, index) => {
-                            return  <TodoItem key={task.name} clickHandler={this.changeStatus} index={index} details={task}/>
+                            return  <TodoItem
+                                key={index}
+                                clickHandler={this.changeStatus}
+                                index={index}
+                                deleteTask={this.deleteTask}
+                                editTask={this.editTask}
+                                details={task}/>
                         })
                     }
                 </ul>
